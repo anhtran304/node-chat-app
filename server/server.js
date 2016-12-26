@@ -1,14 +1,27 @@
 require('./config/config');
 const path = require('path');
+const http = require('http');
 const express = require('express');
+const socketIO = require('socket.io');
 
 var port = process.env.PORT;
 const publicPath = path.join(__dirname, '../public');
 var app = express();
+var server = http.createServer(app);
+var io = socketIO(server);
 
 
 app.use(express.static(publicPath));
 
-app.listen(port, () => {
+io.on('connection', function (socket) {
+  console.log('A user is connected');
+
+  socket.on('disconnect', function () {
+    console.log('User is logout');
+  });
+});
+
+
+server.listen(port, () => {
   console.log(`Server is up on port ${port}`);
 });
