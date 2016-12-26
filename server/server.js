@@ -19,6 +19,16 @@ io.on('connection', function (socket) {
   socket.on('disconnect', function () {
     console.log('User is logout');
   });
+
+  socket.emit('newMessage', {
+    from: 'User',
+    text: 'Hey!',
+    createdAt: '123'
+  });
+
+  socket.on('createMessage', function (message) {
+    console.log('createMessage', message);
+  });
 });
 
 
