@@ -20,14 +20,13 @@ io.on('connection', function (socket) {
     console.log('User is logout');
   });
 
-  socket.emit('newMessage', {
-    from: 'User',
-    text: 'Hey!',
-    createdAt: '123'
-  });
-
   socket.on('createMessage', function (message) {
     console.log('createMessage', message);
+    io.emit('newMessage', {
+      from: message.from,
+      text: message.text,
+      createdAt: new Date().getTime()
+    });
   });
 });
 
