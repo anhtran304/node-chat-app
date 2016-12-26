@@ -16,8 +16,15 @@ app.use(express.static(publicPath));
 io.on('connection', function (socket) {
   console.log('A user is connected');
 
-  socket.on('disconnect', function () {
-    console.log('User is logout');
+  socket.emit('newMessage', {
+    from: 'Admin',
+    text: 'Welcome to chat app'
+  });
+
+  socket.broadcast.emit('newMessage', {
+    from: 'Admin',
+    text: 'New user joined',
+    createdAt: new Date().getTime()
   });
 
   socket.on('createMessage', function (message) {
@@ -27,6 +34,17 @@ io.on('connection', function (socket) {
       text: message.text,
       createdAt: new Date().getTime()
     });
+    // socket.broadcast.emit('newMessage', {
+    //   from: message.from,
+    //   text: message.text,
+    //   createdAt: new Date().getTime()
+    // });
+
+
+  });
+
+  socket.on('disconnect', function () {
+    console.log('User is logout');
   });
 });
 
