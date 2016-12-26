@@ -1,4 +1,4 @@
-require('./../config/config');
+require('./config/config');
 const path = require('path');
 const express = require('express');
 
@@ -10,5 +10,5 @@ var app = express();
 app.use(express.static(publicPath));
 
 app.listen(port, () => {
-  console.log(`App is up on port ${port}`);
+  console.log(`Server is up on port ${port}`);
 });
